@@ -1,0 +1,46 @@
+target_job_title: Software Engineer
+summary: Passionate software engineer with experience building scalable web applications and services.
+
+personal_info:
+  - name: John Doe
+    email: johndoe@example.com
+    number: 123-456-7890
+    location: Anytown, USA
+    url: linkedin.com/in/johndoe
+
+work_experience:
+  - company: ExampleCorp
+    title: Backend Developer
+    date: Jan 2022 - Present
+    achievements:
+      - Developed and maintained REST APIs with Python and Flask
+      - Improved database query performance by 30% through optimization
+      - Collaborated with cross-functional teams on Agile projects
+
+  - company: Webify LLC
+    title: Junior Developer
+    date: Aug 2020 - Dec 2021
+    achievements:
+      - Assisted in developing frontend interfaces with React
+      - Wrote unit tests to increase code coverage by 20%
+      - Participated in code reviews and team stand-ups
+
+certs:
+  - name: AWS Certified Developer - Associate
+    organization: Amazon Web Services
+    issued: June 2023
+    cred_id: ABCD-1234
+
+skills:
+  - Programming Languages:
+      - Python
+      - JavaScript
+      - Java
+  - Frameworks and Tools:
+      - Flask
+      - React
+      - Git
+      - Docker
+  - Databases:
+      - PostgreSQL
+      - MongoDB

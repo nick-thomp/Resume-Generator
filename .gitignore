@@ -1,0 +1,8 @@
+__pycache__
+venv
+
+# ignore everything in /resumes/
+resumes/*
+
+# except the sample yaml
+!resumes/sample.yaml
