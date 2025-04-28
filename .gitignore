@@ -1,5 +1,6 @@
 __pycache__
 venv
+pdf/
 
 # ignore everything in /resumes/
 resumes/*
