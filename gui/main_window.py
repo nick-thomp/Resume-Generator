@@ -77,7 +77,7 @@ class MainWindow(QMainWindow):
         # first generate html then send it to the pdf function
         html_result = generate_html(resume = self.parsed_resume)
         if html_result['status'] == 'Error':
-            self.show_message(result['message'], result['status'])
+            self.show_message(html_result['message'], html_result['status'])
             return None
         result = generate_pdf(html_out=html_result['message'], target_job=self.parsed_resume['target_job_title'])
         self.show_message(result['message'], result['status'])
