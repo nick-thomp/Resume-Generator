@@ -30,7 +30,7 @@ Resume Generator/
 - [x] Refresh YAML file list in GUI
 - [x] Live HTML preview
 - [x] Generate PDF with a click
-- [ ] Logging & Debugging support
+- [x] Logging & Debugging support
 - [ ] Command Line Interface (CLI) for batch resume generation
 - [ ] Multiple resume templates
 - [ ] Edit/save YAML directly from the GUI
