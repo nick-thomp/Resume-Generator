@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QListWidget, QMainWindow, QHBoxLayout, QTextEdit, QVBoxLayout, QPushButton, QWidget, QScrollArea, QLabel
+from PySide6.QtWidgets import QListWidget, QMainWindow, QHBoxLayout, QTextEdit, QVBoxLayout, QPushButton, QWidget, QScrollArea, QLabel, QMessageBox
 from PySide6.QtWebEngineWidgets import QWebEngineView
 import os
 import yaml
@@ -75,17 +75,27 @@ class MainWindow(QMainWindow):
     def generate_pdf(self):
         # Trigger the generate pdf function with parsed yaml file
         # first generate html then send it to the pdf function
-        html = generate_html(resume = self.parsed_resume)
-        result = generate_pdf(html_out=html, target_job=self.parsed_resume['target_job_title'])
-        if result['status'] == 'Success':
-            # Log success
-            print(result['message'])
-        else:
-            # Log error
-            print(result['message'])
+        html_result = generate_html(resume = self.parsed_resume)
+        if html_result['status'] == 'Error':
+            self.show_message(result['message'], result['status'])
+            return None
+        result = generate_pdf(html_out=html_result['message'], target_job=self.parsed_resume['target_job_title'])
+        self.show_message(result['message'], result['status'])
 
     def open_preview(self):
         # generate html and pass it to the preview window
-        html = generate_html(resume=self.parsed_resume)
-        self.preview_window = PreviewWindow(html)
+        result = generate_html(resume=self.parsed_resume)
+        if result['status'] == "Error":
+            self.show_message(result['message'], result['status'])
+        self.preview_window = PreviewWindow(result['message'])
         self.preview_window.show()
+
+    def show_message(self, message, title):
+        msg_box = QMessageBox()
+        if title == 'Error':
+            msg_box.setIcon(QMessageBox.Critical)
+        else:
+            msg_box.setIcon(QMessageBox.Information)
+        msg_box.setWindowTitle(title)
+        msg_box.setText(message)
+        msg_box.exec()
