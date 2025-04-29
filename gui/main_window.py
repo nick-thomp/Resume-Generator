@@ -87,6 +87,7 @@ class MainWindow(QMainWindow):
         result = generate_html(resume=self.parsed_resume)
         if result['status'] == "Error":
             self.show_message(result['message'], result['status'])
+            return
         self.preview_window = PreviewWindow(result['message'])
         self.preview_window.show()
 
