@@ -32,15 +32,15 @@ certs:
     cred_id: ABCD-1234
 
 skills:
-  - Programming Languages:
-      - Python
-      - JavaScript
-      - Java
-  - Frameworks and Tools:
-      - Flask
-      - React
-      - Git
-      - Docker
-  - Databases:
-      - PostgreSQL
-      - MongoDB
+  Programming Languages:
+    - Python
+    - JavaScript
+    - Java
+  Frameworks and Tools:
+    - Flask
+    - React
+    - Git
+    - Docker
+  Databases:
+    - PostgreSQL
+    - MongoDB

@@ -3,31 +3,50 @@ from weasyprint import HTML
 import yaml
 from datetime import datetime
 import os
-import re
+import logging
 
 env = Environment(loader=FileSystemLoader('./templates/'))
 
 def generate_html(template = "basic.html", resume = None):
-    if resume == None:
-        print("No yaml file given. Going to use default file.")
-        with open("resume/sample_yaml.yaml", 'r') as f:
-            resume = yaml.safe_load(f)
+    if resume is None:
+        logging.warning("No yaml file found. Going to use sample file")
+        try:
+            with open("resume/sample.yaml", 'r') as f:
+                resume = yaml.safe_load(f)
+        except Exception as e:
+            logging.error("Failed to load sample.yaml", exc_info=True)
+            return {"status": "Error", "message": f"Exception when generating pdf: {e}"}
 
-            f.close()
-
-    template = env.get_template(template)
+    try:
+        template = env.get_template(template)
+    except Exception as e:
+        logging.error("Failed to load template '%s'", template, exc_info=True)
+        return {"status": "Error", "message": f"Exception when generating pdf: {e}"}
     
-    return template.render(**resume)
+    try:
+        rendered_template = template.render(**resume)
+        return {"status": "Success", "message": rendered_template}
+    except Exception as e:
+        logging.error("Failed to render template '%s'", template, exc_info=True)
+        return {"status": "Error", "message": f"Exception when generating pdf: {e}"}
 
 def generate_pdf(output_path="./pdf/", html_out=None, target_job=None):
+    # make sure pdf/ folder exist
+    if not os.path.exists('pdf'):
+        logging.info("Creating folder for pdf's")
+        os.mkdir('pdf')
+
+    # If we have the target job then use that in the name. Otherwise, use the current date
     if target_job:
         base_name = f"{target_job.lower().replace(' ', '_')}_resume"
     else:
         base_name = f"{datetime.now().strftime("%m-%d-%y")}_resume"
 
+    # Append name onto the output path
     output_path += get_unique_filename(base_name)
 
     if html_out == None:
+        logging.error("Cannot generate PDF. Missing rendered HTML")
         return {"status": "Error", "message": "Missing rendered html. Cannot generate PDF."}
     
     try:
@@ -36,6 +55,7 @@ def generate_pdf(output_path="./pdf/", html_out=None, target_job=None):
     except Exception as e:
         return {"status": "Error", "message": f"Exception when generating pdf: {e}"}
 
+# use this function to make sure we don't overwrite any existing pdf
 def get_unique_filename(base_name, extension=".pdf"):
     number = 1
     new_name = f"{base_name}{extension}"
