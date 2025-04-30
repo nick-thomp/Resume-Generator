@@ -15,7 +15,7 @@ def run_cli():
     logging.info("CLI mode started with arguments: %s", args)
 
     html_result = generate_html(resume=args.yaml, template=args.template)
-    if html_result['status'] == 'Error':
+    if html_result.get("status") == 'Error':
         print(f"❌ {html_result['message']}")
         return
     
