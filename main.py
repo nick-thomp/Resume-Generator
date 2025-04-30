@@ -19,7 +19,7 @@ def run_cli():
         print(f"❌ {html_result['message']}")
         return
     
-    pdf_result = generate_pdf(html_out=html_result['message'], target_job=args.output) # pdf name is usually target_job, but in this case it's not so that will change in the future
+    pdf_result = generate_pdf(html_out=html_result['message'], target_job=args.output) # Using args.output as the target_job parameter for now. This is a temporary workaround and may be refactored in the future to align with the intended use of target_job.
     if pdf_result.get("status") == "Error":
         print(f"❌ {pdf_result['message']}")
     else:
