@@ -31,7 +31,10 @@ Resume Generator/
 - [x] Live HTML preview
 - [x] Generate PDF with a click
 - [x] Logging & Debugging support
-- [ ] Command Line Interface (CLI) for batch resume generation
+- [x] Command Line Interface (CLI) for batch resume generation
+  - More CLI commands:
+  - [ ] --list-templates
+  - [ ] --interactive
 - [ ] Multiple resume templates
 - [ ] Edit/save YAML directly from the GUI
 - [ ] FastAPI integration for web-based generation
