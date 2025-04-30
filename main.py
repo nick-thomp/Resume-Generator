@@ -9,7 +9,7 @@ def run_cli():
     parser = argparse.ArgumentParser(description="Resume Generator CLI")
     parser.add_argument("--yaml", type=str, required=True, help="Path to YAML resume file")
     parser.add_argument("--template", type=str, default="basic.html", help="Template to use")
-    parser.add_argument("--output", type=str, default="output.pdf", help="Output PDF file name")
+    parser.add_argument("--output", type=str, default="output", help="Output PDF file name ( do not include file extension)")
     args = parser.parse_args()
 
     logging.info("CLI mode started with arguments: %s", args)

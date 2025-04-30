@@ -20,11 +20,11 @@ def generate_html(template = "basic.html", resume = None):
     # else if resume is given as a str then assume that it is the file and still needs to be parsed
     elif isinstance(resume, str):
         try:
-            with open(f"resume/{resume}", 'r') as f:
+            with open(f"resumes/{resume}", 'r') as f:
                 resume = yaml.safe_load(f)
         except Exception as e:
             logging.error(f"Failed to parse yaml file {resume}", exc_info=True)
-            return {"status": "Error", "message": f"Failed ot parse yaml file {resume}"}
+            return {"status": "Error", "message": f"Failed to parse yaml file {resume}"}
 
     # Get template that needs to be used in rendering
     try:
