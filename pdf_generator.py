@@ -8,6 +8,7 @@ import logging
 env = Environment(loader=FileSystemLoader('./templates/'))
 
 def generate_html(template = "basic.html", resume = None):
+    # If no resume file given then parse sample file
     if resume is None:
         logging.warning("No yaml file found. Going to use sample file")
         try:
@@ -16,13 +17,23 @@ def generate_html(template = "basic.html", resume = None):
         except Exception as e:
             logging.error("Failed to load sample.yaml", exc_info=True)
             return {"status": "Error", "message": f"Exception when generating pdf: {e}"}
+    # else if resume is given as a str then assume that it is the file and still needs to be parsed
+    elif isinstance(resume, str):
+        try:
+            with open(f"resume/{resume}", 'r') as f:
+                resume = yaml.safe_load(f)
+        except Exception as e:
+            logging.error(f"Failed to parse yaml file {resume}", exc_info=True)
+            return {"status": "Error", "message": f"Failed ot parse yaml file {resume}"}
 
+    # Get template that needs to be used in rendering
     try:
         template = env.get_template(template)
     except Exception as e:
         logging.error("Failed to load template '%s'", template, exc_info=True)
         return {"status": "Error", "message": f"Exception when generating pdf: {e}"}
     
+    # Render template with resume dictionary (parsed yaml)
     try:
         rendered_template = template.render(**resume)
         return {"status": "Success", "message": rendered_template}
